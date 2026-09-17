@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>CampusCare | Clinic Appointment & Queue</title><link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<aside class="sidebar">
+  <div class="brand"><span>✚</span> CampusCare</div>
+  <div class="clinic-status">● Clinic Open</div>
+  <nav>
+    <button class="nav-link active" data-page="dashboard">⌂ &nbsp;Dashboard</button>
+    <button class="nav-link" data-page="appointments">▣ &nbsp;Appointments</button>
+    <button class="nav-link" data-page="queue">↕ &nbsp;Live Queue</button>
+    <button class="nav-link" data-page="profile">◉ &nbsp;My Profile</button>
+  </nav>
+  <div class="sidebar-bottom">Need help?<br><b>Visit the clinic desk</b><hr><button id="logoutBtn" class="logout">↪ Sign out</button></div>
+</aside>
+
+<main class="main">
+<header class="topbar">
+  <div><p class="eyebrow">CAMPUS CLINIC</p><h1 id="pageTitle">Good morning, Student!</h1></div>
+  <button class="profile-chip" data-page="profile"><span class="avatar">S</span><span class="profile-name">Student Name</span>⌄</button>
+</header>
+
+<section class="page active" id="dashboard">
+  <div class="hero">
+    <div><span class="pill success">● Clinic is open</span><h2>Take care of your health,<br>without the long wait.</h2>
+    <p>Book a clinic visit, check your appointment, and follow your queue from one place.</p>
+    <button class="btn primary" id="heroBook">＋ Book an Appointment</button></div><div class="hero-icon">🩺</div>
+  </div>
+  <div class="section-title"><div><h2>Today's overview</h2><p>Your most important clinic information at a glance.</p></div></div>
+  <div class="stats-grid">
+    <button class="stat-card" data-page="queue"><span>YOUR QUEUE</span><strong id="dashQueue">A-018</strong><small>You're currently in line →</small></button>
+    <button class="stat-card" data-page="queue"><span>PEOPLE AHEAD</span><strong id="dashAhead">4</strong><small>Estimated 25 minutes</small></button>
+    <button class="stat-card" data-page="appointments"><span>NEXT APPOINTMENT</span><strong>SEP 17</strong><small>10:30 AM · General Check-up</small></button>
+  </div>
+  <div class="section-title"><h2>Quick actions</h2></div>
+  <div class="quick-grid">
+    <button class="quick-card" id="quickBook"><b>＋</b><strong>Book appointment</strong><small>Choose a service and time</small></button>
+    <button class="quick-card" data-page="queue"><b>↕</b><strong>View live queue</strong><small>See your current position</small></button>
+    <button class="quick-card" data-page="appointments"><b>▣</b><strong>My appointments</strong><small>Manage upcoming visits</small></button>
+  </div>
+  <div class="section-title"><h2>Upcoming appointment</h2><button class="text-btn" data-page="appointments">View all →</button></div>
+  <div class="appointment-preview card"><div class="date-box"><b>17</b><small>SEP</small></div><div class="appointment-info"><b>General Check-up</b><span>Dr. Maria Santos · 10:30 AM</span></div><span class="badge confirmed">Confirmed</span></div>
+</section>
+
+<section class="page" id="appointments">
+  <div class="page-header"><div><p class="eyebrow">APPOINTMENTS</p><h2>My Appointments</h2><p>View and manage your clinic visits.</p></div><button class="btn primary" id="newAppointment">＋ New Appointment</button></div>
+  <div id="appointmentList" class="appointment-list"></div>
+</section>
+
+<section class="page" id="queue">
+  <div class="page-header"><div><p class="eyebrow">QUEUE STATUS</p><h2>Live Queue</h2><p>Your queue information updates while you wait.</p></div><span class="pill success">● Live</span></div>
+  <div class="queue-layout"><div class="card queue-main"><p class="eyebrow">YOUR QUEUE NUMBER</p><div class="queue-number" id="queueNumber">A-018</div>
+    <div class="progress-wrap"><div class="progress" id="queueProgress"></div></div>
+    <div class="queue-grid"><div><b id="queueAhead">4</b><small>People ahead</small></div><div><b id="queueWait">~25 min</b><small>Estimated wait</small></div><div><b>Room 1</b><small>Consultation</small></div></div>
+    <div class="info">🔔 <b>Stay nearby.</b> We'll notify you when your queue number is next.</div>
+  </div>
+  <div class="card queue-side"><h3>How the queue works</h3><ol><li><b>Check in</b><small>Arrive at the clinic.</small></li><li><b>Wait for your number</b><small>Follow your position here.</small></li><li><b>Consult</b><small>Proceed when called.</small></li></ol></div></div>
+</section>
+
+<section class="page" id="profile">
+  <div class="page-header"><div><p class="eyebrow">ACCOUNT</p><h2>My Profile</h2><p>Keep your student information up to date.</p></div></div>
+  <form class="card profile-form" id="profileForm"><div class="form-grid">
+    <label>Full name<input id="fullName" value="Student Name" required></label>
+    <label>Student ID<input value="2026-00123" required></label>
+    <label>Email<input type="email" value="student@campus.edu" required></label>
+    <label>Course / Year<input value="BS Information Technology · 3rd Year" required></label>
+  </div><button class="btn primary" type="submit">Save Changes</button><p id="profileFeedback" class="feedback" hidden>✓ Your profile was saved successfully.</p></form>
+</section>
+</main>
+
+<div class="modal" id="bookingModal">
+<div class="modal-box"><button class="modal-close" data-close="bookingModal">×</button><p class="eyebrow">NEW APPOINTMENT</p><h2>Book a clinic visit</h2><p class="muted">Select a service, date, and available time.</p>
+<form id="bookingForm"><label>Clinic service<select id="service"><option>General Check-up</option><option>Medical Certificate</option><option>Minor Consultation</option><option>First Aid / Follow-up</option></select></label>
+<label>Appointment date<input id="date" type="date" required></label><label>Preferred time<select id="time"><option>9:00 AM</option><option>10:30 AM</option><option>1:30 PM</option><option>3:00 PM</option></select></label>
+<div class="slot-note">✓ Available slots are based on clinic data.</div><div class="modal-actions"><button class="btn secondary" type="button" data-close="bookingModal">Cancel</button><button class="btn primary" type="submit">Confirm Appointment</button></div><p id="bookingFeedback" class="feedback" hidden>✓ Appointment confirmed! Your queue number is A-019.</p></form></div></div>
+
+<div class="modal" id="deleteModal"><div class="modal-box danger-box"><p class="eyebrow">CANCEL APPOINTMENT</p><h2>Are you sure?</h2><p class="muted">Cancelling will release this appointment slot. This action cannot be undone.</p><div class="modal-actions"><button class="btn secondary" data-close="deleteModal">Keep Appointment</button><button class="btn danger" id="confirmCancel">Yes, Cancel</button></div></div></div>
+
+<div class="modal" id="logoutModal"><div class="modal-box"><p class="eyebrow">SIGN OUT</p><h2>Sign out of CampusCare?</h2><p class="muted">You will need to log in again to access your clinic information.</p><div class="modal-actions"><button class="btn secondary" data-close="logoutModal">Stay Signed In</button><button class="btn danger" id="confirmLogout">Sign Out</button></div></div></div>
+<script src="api.js"></script><script src="app.js"></script>
+</body></html>
